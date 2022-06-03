@@ -130,7 +130,7 @@ An die bestehenden Zeilen wird folgende Zeile angefügt:
 
 ` @bash /home/pi/player.sh`
 
-Mit `Ctrl + X` schliessen und mit `Y` speichern.
+Mit `Ctrl + X` schliessen, mit `Y` bestätigen, mit `enter` speichern.
 
 **3. Mediaplayer schreiben**
 
