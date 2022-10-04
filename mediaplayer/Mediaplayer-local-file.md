@@ -151,9 +151,12 @@ Am Ende der Datei folgende Zeile einfügen:
 
 Mit `Ctrl + X` schliessen und mit `Y` speichern.
 
-**Player Datei erstellen**
+**5. Player Datei erstellen**
 
 `sudo nano /home/pi/player.sh`
+
+Bestimmte lokale Datei abspielen:
+<details><summary>Aufklappen</summary>
 
 ```bash
 #!/usr/bin/bash
@@ -162,6 +165,29 @@ do
 	cvlc -f --no-video-title-show --play-and-exit /home/pi/Videos/video.mp4
 done
 ```
+
+</details>
+
+Alle Filme auf USB-Stick abspielen
+<details><summary>Aufklappen</summary>
+
+```bash
+#!/usr/bin/bash
+
+find /media/pi/*/* -maxdepth 0 -iregex '.*\.\(mp4\|mov\|mkv\|avi\)$' -type f > /home/pi/playlist.txt
+
+while :
+do
+        while read -r line; do
+                cvlc -f --no-video-title-show  --play-and-exit "$line"
+        done < /home/pi/playlist.txt
+done
+```
+
+*Erklärung:* Wenn ein USB-Stick angeschlossen ist, wird er im Pfad `/media/pi/` angezeigt. Mit dem Befehl `find`suchen wir im Hauptordner des USB-Sticks nach Dateien mit einer der folgenden Endungen. Mit `-type f`beschränken wir die Resultate zudem auf Dateien, also keine Ordner oder Verknüpfungen. Alle Resultate werden in die Datei `playlist.txt`geschrieben. Anschliessend wird mit `while`ein unendlicher Loop gestartet, in dem jede Zeile der Playlist mit `cvlc` abgespielt wird.
+
+
+</details>
 
 - `-f`		 startet den Player im Fullscreen-Modus
 - `--no-video-title-show` 	verhindert eingeblendeten Dateinamen
