@@ -17,15 +17,26 @@
 **2. SD-Karte vorbereiten**
 
 1. Raspberry Pi Imager von https://www.raspberrypi.org/software/ installieren
-   1. Einstellungen (Zahnrad Symbol) öffnen und bei Bedarf WLAN Passwort einfügen.
-
 2. Im Raspberry Pi Imager Betriebssystem auswählen: "Raspberry Pi OS (32bit) Desktop Lite"
-3. SD-Karte auswählen
+3. Einstellungen (Zahnrad Symbol unten rechts) öffnen.
+   1. User und Passwort setzen und irgendwo notieren.
+   2. bei Bedarf WLAN Zugangsdaten eingeben.
+4. SD-Karte auswählen
    (Beim einstecken der SD-Karte darauf achten, dass die Schreibschutz-Lasche nicht nach vorne rutscht.)
-4. SD-Karte beschreiben
+5. SD-Karte beschreiben
    Um den Schreibvorgang zu starten muss ein Adminpasswort eingegeben werden. Die Karte wird nach dem Prozess automatisch ausgeworfen.
 
-Danach Karte auswerfen und in den Raspberry Pi einsetzen.
+**Für Gebrauch mit Composite zusätzliche Schritte ausfühen**
+1. Karte herausziehen und nochmals einstecken.
+2. Im Verzeichnis `boot` die Datei `config.txt` zum bearbeiten in einem CodeEditor oder z.B. TextEdit öffnen.
+   1. folgende Zeilen kommentieren (ein # am Zeilenbeginn eingeben)
+      #hdmi_force_hotplug=1
+   2. folgdende Teilen auskommentieren (# entfernen) bzw. ergänzen.
+      hdmi_ignore_hotplug=1
+      enable_tvout=1
+      sdtv_mode=2
+      disable_splash=1 
+   3. Danach Karte wieder auswerfen.
 
 **4. Raspberry Pi starten**
 
@@ -40,8 +51,7 @@ Die Systemeinstellungen auf dem Raspberry Pi erreichen wir über das Hauptmenu o
 `sudo raspi-config`
 
 `System Options` > `Audio` Audioausgang wählen
-`Display Options` > `Resolution`, `Underscan`
-`Localisation Options` > `Locale`, `Timezone`, `Keyboard`
+`Localisation Options` > `Locale`, `Timezone` und `Keyboard` anpassen
 
 Links zu Raspberry Pi Einstieg:
 https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-started
@@ -50,6 +60,7 @@ https://projects.raspberrypi.org/en/projects/raspberry-pi-using
 https://projects.raspberrypi.org/en/projects/demo-programs/5
 
 ## Die Konsole im Raspberry Pi
+<details><summary>Tipps aufklappen</summary>
 
 Die Konsole (Terminal) im Raspberry Pi startet entweder direkt oder kann mit angeschlossenem Monitor über das Hauptmenu geöffnet werden.
 
@@ -99,27 +110,20 @@ Nützliche Unix Befehle:
 https://www.thegeekstuff.com/2010/11/50-linux-commands/
 https://en.wikipedia.org/wiki/List_of_Unix_commands
 
+</details>
+	
 ## MediaPlayer einrichten
 
-**1. System Updaten**
+**1. Daten übertragen**
 
-WLAN verbinden über Pfeil-Symbol oben rechts. *Für Verbindungen mit WPA-gesicherten Netzwerken z.b. bfh oder eduroam braucht es spezielle Einstellungen. Bei Fragen den MediaLab Support kontaktieren.* Verbindungen zum LAN mit Ethernet erfordern keine zusätzlichen Einstellungen.
-
-*Update ist empfohlen aber nicht zwingend nötig. Dafür ist eine Internetverbindung erforderlich.*
-
-`sudo apt-get update`
-`sudo apt-get upgrade`
-`sudo reboot`
-
-**2. Daten übertragen**
-
-Die Daten werden am einfachsten per USB-Stick auf den Raspberry Pi in den Ordner /home/pi/Videos kopiert und bestenfalls umbenannt in einen einfachen Namen ohne Sonderzeichen, z.B.: `video.mkv`.
+Die Daten werden am einfachsten per USB-Stick auf den Raspberry Pi in den Ordner /home/pi/Videos kopiert und bestenfalls umbenannt in einen einfachen Namen ohne Sonderzeichen, z.B.: `video.mp4`. Unterstützt werden die Container mp4, mov, mkv, ogg. Max Bitrate 20Mbit/s, empfohlen h.264.
 
 **3. Videoplayer testen**
 
 Nun kann der Film mit dem installierten VLC abgespielt werden:
 
-`vlc /home/pi/film1.mp4`
+`vlc /home/pi/Videos/video.mp4`
+
 `vlc --help` listet alle möglichen Befehle und Optionen auf.
 
 **4. Autostart einrichten**
@@ -134,13 +138,13 @@ Bestehende Autostart-Datei editieren:
 @xscreensaver -no-splash
 ```
 
-An die bestehenden Zeilen wird folgende Zeile angefügt:
+Am Ende der Datei folgende Zeile einfügen:
 
 ` @bash /home/pi/player.sh`
 
 Mit `Ctrl + X` schliessen und mit `Y` speichern.
 
-Danach wird die Player Datei erstellt und editiert:
+**Player Datei erstellen**
 
 `sudo nano /home/pi/player.sh`
 
@@ -148,7 +152,7 @@ Danach wird die Player Datei erstellt und editiert:
 #!/usr/bin/bash
 while :
 do
-	cvlc -f --no-video-title-show --play-and-exit /home/pi/Videos/video.mkv
+	cvlc -f --no-video-title-show --play-and-exit /home/pi/Videos/video.mp4
 done
 ```
 
@@ -164,33 +168,32 @@ Die eben erstelle Datei wird ausführbar gemacht:
 
 Nach einem Neustart mit `sudo reboot` wird der Mediaplayer automatisch starten.
 
-Zwischen den Wiedergaben, erscheint kurz der Desktop. Um dies zu verhindern, kann einerseits das Video bereits in der Datei x mal geloopt und so abgespeichert werden.
+**TIPPS**
 
-Zudem wird der Desktop-hintergrund geändert mit Rechtsklick auf den Desktop. Dann Farbe Schwarz wählen. Mit Rechtsklick auf die Menubar kann auch diese Schwarz gefärbt werden und auto-hide aktiviert werden. Danach erscheint zwischen den Wiedergaben lediglich ein schwarzes Fenster.
+1. Zwischen den Wiedergaben, erscheint kurz der Desktop. Um dies zu verhindern, gibt es folgende Optionen
+   1. Das Video bereits in der Datei x mal loopen.
+   2. Desktop-hintergrund ändern mit Rechtsklick auf den Desktop. Farbe Schwarz wählen. Mit Rechtsklick auf die Menubar kann auch diese Schwarz gefärbt werden und auto-hide aktiviert werden. Danach erscheint zwischen den Wiedergaben lediglich eine schwarze Fläche.
 
-**5. Video- und Audio-Ausgänge konfigurieren**
+2. Für mehrere Videos die Zeile `cvlc ... ` duplizieren und Dateinamen anpassen.
 
-Je nach Setup sind Änderungen nötig in den Dateien: `/boot/config.txt` oder `/boot/cmdline.txt`.
-
-Diese Files sind auf dem sichtbaren Teil der SD-Karte und können auch an einem anderen PC angepasst werden. 
+4. Video- und Audio-Ausgänge konfigurieren für Composite
 
 Video Optionen (HDMI, Composite)
 https://www.raspberrypi.org/documentation/configuration/config-txt/video.md
 https://bhavyanshu.me/tutorials/force-raspberry-pi-output-to-composite-video-instead-of-hdmi/03/03/2014/
 
 Bei Composite folgendes Stecker-Layout beachten und eventuell mit Messgerät nachprüfen.
-Tip 	->  Left
+Tip    ->  Left
 Ring 1 -> Right
 Ring 3 -> Ground
 Sleeve -> Video
 
 [Quelle](https://www.raspberrypi-spy.co.uk/2014/07/raspberry-pi-model-b-3-5mm-audiovideo-jack/)
 
-**6. Boottext und Splashscreen deaktivieren**
+5. Boottext deaktivieren
 
-1. `sudo nano /boot/config.txt` und am Ende der Datei `disable_splash=1` einfügen.
-
-2. `sudo nano /boot/cmdline.txt`
-   `console=tty1` ändern zu `console=tty3` und am Ende der Zeile `consoleblank=1 logo.nologo quiet loglevel=0 plymouth.enable=0 vt.global_cursor_default=0 plymouth.ignore-serial-consoles splash fastboot noatime nodiratime noram` einfügen. Achtung: kein Zeilenumbruch einfügen!
+   1. `sudo nano /boot/cmdline.txt`
+   2. `console=tty1` ändern zu `console=tty3`
+   3. am Ende der Zeile `consoleblank=1 logo.nologo quiet loglevel=0 plymouth.enable=0 vt.global_cursor_default=0 plymouth.ignore-serial-consoles splash fastboot noatime nodiratime noram` einfügen. Achtung: kein Zeilenumbruch einfügen!
 
 [Quelle](https://ampron.eu/article/tutorial-simplest-way-to-remove-boot-text-on-the-raspberry-pi-based-kiosk-or-digital-signage-display/) 
