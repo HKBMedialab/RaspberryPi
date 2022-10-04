@@ -147,7 +147,7 @@ Bestehende Autostart-Datei editieren:
 
 Am Ende der Datei folgende Zeile einfügen:
 
-` @bash /home/pi/player.sh`
+` @bash /home/pi/player.sh &`
 
 Mit `Ctrl + X` schliessen und mit `Y` speichern.
 
@@ -174,6 +174,8 @@ Alle Filme auf USB-Stick abspielen
 ```bash
 #!/usr/bin/bash
 
+sleep 5
+	
 find /media/pi/*/* -maxdepth 0 -iregex '.*\.\(mp4\|mov\|mkv\|avi\)$' -type f > /home/pi/playlist.txt
 
 while :
