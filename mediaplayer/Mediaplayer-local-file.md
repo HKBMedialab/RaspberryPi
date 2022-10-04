@@ -168,27 +168,32 @@ Die eben erstelle Datei wird ausführbar gemacht:
 
 Nach einem Neustart mit `sudo reboot` wird der Mediaplayer automatisch starten.
 
-**TIPPS**
+## TIPPS
 
 1. Zwischen den Wiedergaben, erscheint kurz der Desktop. Um dies zu verhindern, gibt es folgende Optionen
    1. Das Video bereits in der Datei x mal loopen.
-   2. Desktop-hintergrund ändern mit Rechtsklick auf den Desktop. Farbe Schwarz wählen. Mit Rechtsklick auf die Menubar kann auch diese Schwarz gefärbt werden und auto-hide aktiviert werden. Danach erscheint zwischen den Wiedergaben lediglich eine schwarze Fläche.
+   2. Desktop-Hintergrund ändern mit Rechtsklick auf den Desktop. Layout "No-Image", Farbe Schwarz wählen.
+   3. Rechtsklick auf die Menubar, `Panel Settings` > `Advanced` > `Minimize panel ...` aktivieren.
+   4. Rechtsklick auf die Menubar, `Panel Appearance` > `Colour` schwarz auswählen.
+   
+2. Für mehrere Videos in der Datei `player.sh` die Zeile `cvlc ... ` duplizieren und Dateinamen anpassen.
 
-2. Für mehrere Videos die Zeile `cvlc ... ` duplizieren und Dateinamen anpassen.
+3. Video- und Audio-Ausgänge konfigurieren für Composite
+   
+   Bei Composite beachten, dass das Stecker-Layout vom RaspberryPi folgende Belegung hat. Eventuell mit Messgerät nachprüfen. Wichtig ist, dass Video und Ground richtig liegen. 
 
-4. Video- und Audio-Ausgänge konfigurieren für Composite
+   | Stecker  | Signal   |
+   | -------- | -------- |
+   | Spitze   | Audio-L  |
+   | Ring 1   | Audio-R  |
+   | Ring 2   | Ground   |
+   | Ring 3   | Video    |
+   
+   Video Optionen (HDMI, Composite)
+   https://www.raspberrypi.org/documentation/configuration/config-txt/video.md
+   https://bhavyanshu.me/tutorials/force-raspberry-pi-output-to-composite-video-instead-of-hdmi/03/03/2014/
 
-Video Optionen (HDMI, Composite)
-https://www.raspberrypi.org/documentation/configuration/config-txt/video.md
-https://bhavyanshu.me/tutorials/force-raspberry-pi-output-to-composite-video-instead-of-hdmi/03/03/2014/
-
-Bei Composite folgendes Stecker-Layout beachten und eventuell mit Messgerät nachprüfen.
-Tip    ->  Left
-Ring 1 -> Right
-Ring 3 -> Ground
-Sleeve -> Video
-
-[Quelle](https://www.raspberrypi-spy.co.uk/2014/07/raspberry-pi-model-b-3-5mm-audiovideo-jack/)
+   [Quelle](https://www.raspberrypi-spy.co.uk/2014/07/raspberry-pi-model-b-3-5mm-audiovideo-jack/)
 
 5. Boottext deaktivieren
 
@@ -196,4 +201,4 @@ Sleeve -> Video
    2. `console=tty1` ändern zu `console=tty3`
    3. am Ende der Zeile `consoleblank=1 logo.nologo quiet loglevel=0 plymouth.enable=0 vt.global_cursor_default=0 plymouth.ignore-serial-consoles splash fastboot noatime nodiratime noram` einfügen. Achtung: kein Zeilenumbruch einfügen!
 
-[Quelle](https://ampron.eu/article/tutorial-simplest-way-to-remove-boot-text-on-the-raspberry-pi-based-kiosk-or-digital-signage-display/) 
+   [Quelle](https://ampron.eu/article/tutorial-simplest-way-to-remove-boot-text-on-the-raspberry-pi-based-kiosk-or-digital-signage-display/) 
