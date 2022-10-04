@@ -27,6 +27,9 @@
    Um den Schreibvorgang zu starten muss ein Adminpasswort eingegeben werden. Die Karte wird nach dem Prozess automatisch ausgeworfen.
 
 **3. Für Gebrauch mit Composite zusätzliche Schritte ausfühen**
+
+*ACHTUNG!! Polarität des TRRS-Steckers muss mit RaspberryPi übereinstimmen. Beachte Punkt 3. unter TIPPS am Ende dieser Anleitung!*
+
 1. Karte herausziehen und nochmals einstecken.
 2. Im Verzeichnis `boot` die Datei `config.txt` zum bearbeiten in einem CodeEditor oder z.B. TextEdit öffnen.
    1. folgende Zeilen kommentieren (ein # am Zeilenbeginn eingeben)
