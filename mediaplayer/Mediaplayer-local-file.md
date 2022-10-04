@@ -26,16 +26,20 @@
 5. SD-Karte beschreiben
    Um den Schreibvorgang zu starten muss ein Adminpasswort eingegeben werden. Die Karte wird nach dem Prozess automatisch ausgeworfen.
 
-**Für Gebrauch mit Composite zusätzliche Schritte ausfühen**
+**3. Für Gebrauch mit Composite zusätzliche Schritte ausfühen**
 1. Karte herausziehen und nochmals einstecken.
 2. Im Verzeichnis `boot` die Datei `config.txt` zum bearbeiten in einem CodeEditor oder z.B. TextEdit öffnen.
    1. folgende Zeilen kommentieren (ein # am Zeilenbeginn eingeben)
+      ```
       #hdmi_force_hotplug=1
+      ```
    2. folgdende Teilen auskommentieren (# entfernen) bzw. ergänzen.
+      ```
       hdmi_ignore_hotplug=1
       enable_tvout=1
       sdtv_mode=2
-      disable_splash=1 
+      disable_splash=1
+      ```
    3. Danach Karte wieder auswerfen.
 
 **4. Raspberry Pi starten**
